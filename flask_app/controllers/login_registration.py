@@ -1,4 +1,4 @@
-from flask import render_template, redirect, session, request
+from flask import render_template, redirect, session, request, flash
 from flask_bcrypt import Bcrypt
 from flask_app import app
 from flask_app.models.user import User
@@ -17,7 +17,6 @@ def r_login_and_registration():
 @app.route('/registration', methods=['POST'])
 def f_registration():
     if not User.validate_registration(request.form):
-        print('invalid form')
         return redirect('/')
     
     registration_data = {
@@ -27,7 +26,6 @@ def f_registration():
         'password': BCRYPT.generate_password_hash(request.form['password_registration'])
     }
 
-    print('valid form')
     user_id = User.register_user(registration_data)
     session['user_id'] = user_id
     return redirect('/recipes')
@@ -45,8 +43,11 @@ def f_login():
 
     user = User.get_by_email(login_data)
     pw_check = BCRYPT.check_password_hash(user.password, login_data['password'])
-    if pw_check:
-        session['user_id'] = user.id
+    if not pw_check:
+        flash('* Invalid password.', 'login')
+        return redirect('/')
+
+    session['user_id'] = user.id
     return redirect('/recipes')
 
 

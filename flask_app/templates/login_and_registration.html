@@ -17,6 +17,11 @@
             <!-- registration form -->
             <div class="col">
                 <h2 class="mb-5 text-decoration-underline">Register</h2>
+                {% with messages = get_flashed_messages(category_filter=["registration"]) %}
+                {% for message in messages %}
+                <p class="text-danger fwt-bold"> {{ message }}</p>
+                {% endfor %}
+                {% endwith %}
                 <form action="/registration" method="post" class="pe-5">
                     <div class="row mb-3">
                         <label for="first_name" class="col-sm-3 col-form-label">First Name</label>
@@ -54,6 +59,11 @@
             <!-- login form -->
             <div class="col">
                 <h2 class="mb-5 text-decoration-underline">Login</h2>
+                {% with messages = get_flashed_messages(category_filter=["login"]) %}
+                {% for message in messages %}
+                <p class="text-danger fwt-bold"> {{ message }}</p>
+                {% endfor %}
+                {% endwith %}
                 <form action="/login" method="post" class="pe-5">
                     <div class="row mb-3">
                         <label for="email_login" class="col-sm-3 col-form-label">Email</label>

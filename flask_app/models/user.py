@@ -1,3 +1,4 @@
+from flask import flash
 from flask_app.config.mysqlconnection import connectToMySQL
 import re
 
@@ -44,16 +45,22 @@ class User:
         email_data = {'email': form.get('email_registration')}
 
         if User.get_by_email(email_data):
+            flash('* Email is already registered.', 'registration')
             is_valid = False
         if not EMAIL_REGEX.match(form.get('email_registration')):
+            flash('* Please enter a valid email.', 'registration')
             is_valid = False
         if not NAME_REGEX.match(form.get('first_name')):
+            flash('* First name must be at least 2 characters.', 'registration')
             is_valid = False
         if not NAME_REGEX.match(form.get('last_name')):
+            flash('* Last name must be at least 2 characters.', 'registration')
             is_valid = False
         if not PASSWORD_REGEX.match(form.get('password_registration')):
+            flash('* Password must consist of alphanumeric or special characters, and must be 8 characters or longer.', 'registration')
             is_valid = False
-        if form.get('password_registration') != form.get('password_confirmation'):
+        if form.get('password_registration') != form.get('password_confirmation', 'registration'):
+            flash('* Password do not match.')
             is_valid = False
 
         return is_valid
@@ -67,6 +74,7 @@ class User:
         email_data = {'email': form.get('email_login')}
 
         if not User.get_by_email(email_data):
+            flash('* Email is not registered.','login')
             is_valid = False
         return is_valid
 

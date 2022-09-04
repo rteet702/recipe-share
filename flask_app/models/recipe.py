@@ -1,9 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models.user import User
+from flask import flash
 import re
-
-
-TEST_REGEX = re.compile(r'^[a-zA-Z]{2,}$')
 
 
 class Recipe:
@@ -26,15 +24,20 @@ class Recipe:
         """Valides the recipe submitted by the user."""
 
         is_valid = True
-        if not TEST_REGEX.match(form.get('name')):
+        if not len(form.get('name')) > 0:
+            flash('* Invalid Name.')
             is_valid = False
-        if not TEST_REGEX.match(form.get('description')):
+        if not len(form.get('description')) > 0:
+            flash('* Invalid Description.')
             is_valid = False
-        if not TEST_REGEX.match(form.get('instructions')):
+        if not len(form.get('instructions')) > 0:
+            flash('* Invalid Instructions.')
             is_valid = False
         if form.get('date_cooked', None) == None:
+            flash('* Invalid Date.')
             is_valid = False
         if form.get('under_30', None) == None:
+            flash('* Select an option for Over/Under 30.')
             is_valid = False
 
         return is_valid

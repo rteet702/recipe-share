@@ -20,6 +20,11 @@
             </div>
         </div>
         <!-- form layout -->
+        {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+        <p class="text-danger fwt-bold"> {{ message }}</p>
+        {% endfor %}
+        {% endwith %}
         <form action="/recipes/submit" method="post" class="pe-5">
             <div class="row">
                 <div class="col">
