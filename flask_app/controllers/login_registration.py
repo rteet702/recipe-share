@@ -48,3 +48,9 @@ def f_login():
     if pw_check:
         session['user_id'] = user.id
     return redirect('/recipes')
+
+
+@app.route('/logout')
+def f_logout():
+    session.clear()
+    return redirect('/')

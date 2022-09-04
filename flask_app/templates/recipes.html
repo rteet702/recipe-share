@@ -30,7 +30,7 @@
                 </div>
                 <div class="col d-flex justify-content-between">
                     <p><a href="#">Create +</a></p>
-                    <p><a href="#">Logout</a></p>
+                    <p><a href="/logout">Logout</a></p>
                 </div>
             </div>
             <!-- table with recipes -->
@@ -44,6 +44,30 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for user_with_recipes in uwr: %}
+                    {% for recipe in user_with_recipes.recipes %}
+                    <tr>
+                        <td>{{ recipe.name }}</td>
+                        <td>
+                            {% if recipe.under_30 == 0 %}
+                            No
+                            {% else %}
+                            Yes
+                            {% endif %}
+                        </td>
+                        <td>{{ user_with_recipes.first_name }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic button group">
+                                <button type="button" class="btn btn-primary">View Recipe</button>
+                                {% if user_with_recipes.id == user.id: %}
+                                <button type="button" class="btn btn-primary">Edit</button>
+                                <button type="button" class="btn btn-danger">Delete</button>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

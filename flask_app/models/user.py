@@ -1,5 +1,3 @@
-import email
-from flask_app import app
 from flask_app.config.mysqlconnection import connectToMySQL
 import re
 
@@ -25,6 +23,9 @@ class User:
         self.created_at = data.get('created_at')
         self.updated_at = data.get('updated_at')
         self.recipes = []
+
+    def __repr__(self):
+        return f'{self.email}'
 
     @staticmethod
     def register_user(data:dict) -> None:
