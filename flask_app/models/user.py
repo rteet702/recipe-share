@@ -76,10 +76,10 @@ class User:
 
         query = "SELECT * FROM users WHERE email=%(email)s;"
         result = connectToMySQL('recipes').query_db(query, data)
-        if result == () or result == []:
+        if not result:
             return False
-        else:
-            return cls(result[0])
+
+        return cls(result[0])
 
     @classmethod
     def get_by_id(cls, data:dict):
@@ -89,3 +89,13 @@ class User:
         result = connectToMySQL('recipes').query_db(query, data)
         if result:
             return cls(result[0])
+
+    @classmethod
+    def get_user_by_recipe(cls, data:dict) -> object:
+        """Get user by recipe."""
+
+        query = "SELECT user_id FROM recipes WHERE id=%(id)s;" 
+        result = connectToMySQL('recipes').query_db(query, data)
+
+        user_data = {'id': result[0]['user_id']}
+        return cls.get_by_id(user_data)
