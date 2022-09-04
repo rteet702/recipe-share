@@ -42,7 +42,7 @@ class User:
 
         email_data = {'email': form.get('email_registration')}
 
-        if User.get_by_email(email_data) is not [] or ():
+        if User.get_by_email(email_data):
             is_valid = False
         if not EMAIL_REGEX.match(form.get('email_registration')):
             is_valid = False
@@ -68,6 +68,7 @@ class User:
         if not User.get_by_email(email_data):
             is_valid = False
         return is_valid
+
     @classmethod
     def get_by_email(cls, data:dict):
         """Check if there is an user associated with the provided email. If a user is found, returns an object constructed from the query."""
@@ -77,4 +78,13 @@ class User:
         if result == () or result == []:
             return False
         else:
+            return cls(result[0])
+
+    @classmethod
+    def get_by_id(cls, data:dict):
+        """Access the user associated with the provided id. If a user is found, returns an object constructed from the query."""
+
+        query = "SELECT * FROM users WHERE id=%(id)s;"
+        result = connectToMySQL('recipes').query_db(query, data)
+        if result:
             return cls(result[0])

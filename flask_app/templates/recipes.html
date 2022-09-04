@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Share | All Recipes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+</head>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recipe Share | Login</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    </head>
+    <body>
+        <div class="container">
+            <!-- top-bar with title -->
+            <div class="row my-5">
+                <h1 class="fw-bold">Welcome, {{ user.first_name }}</h1>
+            </div>
+            <!-- bar with logout and table name -->
+            <div class="row my-3">
+                <div class="col-10">
+                    <p>All created recipes:</p>
+                </div>
+                <div class="col d-flex justify-content-between">
+                    <p><a href="#">Create +</a></p>
+                    <p><a href="#">Logout</a></p>
+                </div>
+            </div>
+            <!-- table with recipes -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Under</th>
+                        <th scope="col">Posted By</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </body>
+    </html>
+</body>
+</html>

@@ -9,12 +9,15 @@ BCRYPT = Bcrypt(app)
 
 @app.route('/')
 def r_login_and_registration():
+    if 'user_id' in session:
+        return redirect('/recipes')
     return render_template('login_and_registration.html')
 
 
 @app.route('/registration', methods=['POST'])
 def f_registration():
     if not User.validate_registration(request.form):
+        print('invalid form')
         return redirect('/')
     
     registration_data = {
@@ -24,9 +27,10 @@ def f_registration():
         'password': BCRYPT.generate_password_hash(request.form['password_registration'])
     }
 
+    print('valid form')
     user_id = User.register_user(registration_data)
     session['user_id'] = user_id
-    return redirect('/')
+    return redirect('/recipes')
 
 
 @app.route('/login', methods=['POST'])
@@ -43,4 +47,4 @@ def f_login():
     pw_check = BCRYPT.check_password_hash(user.password, login_data['password'])
     if pw_check:
         session['user_id'] = user.id
-    return redirect('/')
+    return redirect('/recipes')
